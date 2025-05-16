@@ -100,17 +100,14 @@ streamlit-chat-app/
 
 ## Demonstração
 
-### Tela de Login
-
-![Tela de Login](docs/login.png)
 
 ### Tela Principal do Chat
 
-![Tela Principal](docs/chat.png)
+![Tela Principal](https://github.com/ItaloRochaj/streamlit-chat-app/blob/main/streamlit-chat-app/imagens%20do%20projeto/Captura%20de%20tela%20de%202025-05-16%2017-02-56.png)
 
 ### Upload de Documentos
 
-![Upload de Documentos](docs/upload.png)
+![Upload de Documentos](https://github.com/ItaloRochaj/streamlit-chat-app/blob/main/streamlit-chat-app/imagens%20do%20projeto/Captura%20de%20tela%20de%202025-05-16%2017-02-25.png)
 
 ---
 
