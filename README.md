@@ -1,6 +1,6 @@
 # Streamlit Chat App
 
-![Logo do Projeto](streamlit/logo.jpeg)
+![Logo do Projeto]https://github.com/ItaloRochaj/streamlit-chat-app/blob/main/streamlit-chat-app/imagens%20do%20projeto/logo.jpg
 
 ## Visão Geral
 
