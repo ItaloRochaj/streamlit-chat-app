@@ -1,6 +1,9 @@
 # Streamlit Chat App
 
-![Logo do Projeto]src=https://github.com/ItaloRochaj/streamlit-chat-app/blob/main/streamlit-chat-app/imagens%20do%20projeto/logo.jpg)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ItaloRochaj/streamlit-chat-app/main/streamlit-chat-app/imagens%20do%20projeto/logo.jpg" alt="Logo do Projeto" width="200"/>
+</p>
+
 
 ## Visão Geral
 
