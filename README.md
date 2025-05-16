@@ -1,5 +1,7 @@
 # Streamlit Chat App
 
+![Logo do Projeto](streamlit/logo.jpeg)
+
 ## Visão Geral
 
 O **Streamlit Chat App** é uma aplicação de chat inteligente desenvolvida em Python utilizando o framework Streamlit. O objetivo principal é oferecer uma interface acessível para advogados e profissionais do direito analisarem documentos jurídicos com o auxílio de inteligência artificial, tornando a análise documental mais rápida, precisa e acessível.
@@ -94,6 +96,22 @@ streamlit-chat-app/
    ```
 
 5. **Acesse em:** [http://localhost:8501](http://localhost:8501)
+
+---
+
+## Demonstração
+
+### Tela de Login
+
+![Tela de Login](docs/login.png)
+
+### Tela Principal do Chat
+
+![Tela Principal](docs/chat.png)
+
+### Upload de Documentos
+
+![Upload de Documentos](docs/upload.png)
 
 ---
 
