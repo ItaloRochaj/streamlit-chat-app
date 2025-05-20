@@ -13,7 +13,7 @@ from functions import (
     generate_chat_prompt, format_context, 
     read_pdf_from_uploaded_file, read_txt_from_uploaded_file, read_csv_from_uploaded_file
 )
-PROFILE_NAME = os.environ.get("AWS_PROFILE", "")
+PROFILE_NAME = os.environ.get("AWS_PROFILE", "grupo8")
 
 INFERENCE_PROFILE_ARN = "arn:aws:bedrock:us-east-1:851614451056:inference-profile/us.anthropic.claude-3-5-sonnet-20241022-v2:0"
 
@@ -36,15 +36,42 @@ def add_javascript():
                     }
                 });
             }
+            
+            // Mostrar o nome do arquivo quando for anexado
+            const fileUploader = document.querySelector('.stFileUploader');
+            if (fileUploader) {
+                const observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        if (mutation.type === 'childList' && mutation.addedNodes.length) {
+                            const fileInfo = fileUploader.querySelector('.uploadedFileName');
+                            if (fileInfo) {
+                                const fileName = fileInfo.textContent.trim();
+                                // Adicionando uma mensagem ao lado do input
+                                const inputContainer = document.querySelector('.input-container');
+                                let fileStatus = document.querySelector('.file-attached');
+                                
+                                if (!fileStatus) {
+                                    fileStatus = document.createElement('div');
+                                    fileStatus.className = 'file-attached';
+                                    inputContainer.insertBefore(fileStatus, inputContainer.firstChild);
+                                }
+                                
+                                fileStatus.innerHTML = '<i class="fas fa-paperclip"></i> ' + fileName;
+                            }
+                        }
+                    });
+                });
+                
+                observer.observe(fileUploader, { childList: true, subtree: true });
+            }
         }, 1000); // Pequeno atraso para garantir que os elementos foram carregados
     });
     </script>
     """
     st.components.v1.html(js_code, height=0)
 
-#alterar
 st.set_page_config(
-   page_title="NOME DA PÁGINA",
+   page_title="Donna AI",
    page_icon="logo.jpeg",
    layout="wide",
    initial_sidebar_state="expanded"
@@ -58,7 +85,7 @@ def preprocess_user_message(message):
     """
     return message
 
-def get_boto3_client(service_name, region_name='us-east-1', profile_name=''):
+def get_boto3_client(service_name, region_name='us-east-1', profile_name='grupo8'):
     """
     Retorna um cliente do serviço AWS usando IAM Role da instância.
     """
@@ -211,12 +238,12 @@ def check_password():
                     padding: 2rem;
                     border-radius: 10px;
                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                    background-color: white;
+                    background-color: #111111;
                 }
                 .login-title {
                     margin-bottom: 2rem;
                     text-align: center;
-                    color: #4CAF50;
+                    color: #111111;
                 }
                 .login-button {
                     width: 100%;
@@ -225,12 +252,49 @@ def check_password():
             </style>
         """, unsafe_allow_html=True)
 
-        st.markdown('<div class="login-form">', unsafe_allow_html=True)
-        st.markdown('<h1 class="login-title">Login</h1>', unsafe_allow_html=True)
         
-        st.text_input("Usuário", key="username")
-        st.text_input("Senha", type="password", key="password")
-        st.button("Entrar", on_click=password_entered, key="login-button")
+        import base64
+
+
+        col1, col2, col3 = st.columns([1, 6, 1])
+        with col2:
+            with open("logo.jpeg", "rb") as f:
+                b64 = base64.b64encode(f.read()).decode()
+
+
+            st.markdown(f"""
+            <div style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+    ">
+                <!-- img em Base64 para não quebrar caminho -->
+                <img src="data:image/jpeg;base64,{b64}" style="width:90px; height:auto;" />
+                <h1 style="color:#f8f8ff; margin:0; line-height:60px; font-size:2rem;">
+                    Donna AI
+                 </h1>
+    </div>
+    <h2 style="
+        text-align:center;
+        color:#f8f8ff;
+        margin-top:0;
+        margin-bottom:2rem;
+        font-size:1.5rem;
+    ">
+        Login
+    </h2>
+    """, unsafe_allow_html=True)
+
+    
+        
+        m_left, m_center, m_right = st.columns([2, 1, 2])
+        with m_center:
+            st.text_input("Usuário", key="username", max_chars=None)
+            st.text_input("Senha", type="password", key="password")
+            st.button("Entrar", on_click=password_entered)
+
         
         if st.session_state["login_attempt"] and not st.session_state["password_correct"]:
             st.error("Usuário ou senha incorretos")
@@ -371,59 +435,6 @@ def handle_message():
         else:
             st.session_state["user_input"] = ""
             st.experimental_rerun()
-
-def add_javascript():
-    """Adiciona JavaScript para melhorar a interação do usuário com o chat"""
-    js_code = """
-    <script>
-    // Fazer com que a tecla Enter submeta o formulário
-    document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function() {
-            const textarea = document.querySelector('textarea');
-            if (textarea) {
-                textarea.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                        e.preventDefault();
-                        const sendButton = document.querySelector('button[data-testid="baseButton-secondary"]');
-                        if (sendButton) {
-                            sendButton.click();
-                        }
-                    }
-                });
-            }
-            
-            // Mostrar o nome do arquivo quando for anexado
-            const fileUploader = document.querySelector('.stFileUploader');
-            if (fileUploader) {
-                const observer = new MutationObserver(function(mutations) {
-                    mutations.forEach(function(mutation) {
-                        if (mutation.type === 'childList' && mutation.addedNodes.length) {
-                            const fileInfo = fileUploader.querySelector('.uploadedFileName');
-                            if (fileInfo) {
-                                const fileName = fileInfo.textContent.trim();
-                                // Adicionando uma mensagem ao lado do input
-                                const inputContainer = document.querySelector('.input-container');
-                                let fileStatus = document.querySelector('.file-attached');
-                                
-                                if (!fileStatus) {
-                                    fileStatus = document.createElement('div');
-                                    fileStatus.className = 'file-attached';
-                                    inputContainer.insertBefore(fileStatus, inputContainer.firstChild);
-                                }
-                                
-                                fileStatus.innerHTML = '<i class="fas fa-paperclip"></i> ' + fileName;
-                            }
-                        }
-                    });
-                });
-                
-                observer.observe(fileUploader, { childList: true, subtree: true });
-            }
-        }, 1000); // Pequeno atraso para garantir que os elementos foram carregados
-    });
-    </script>
-    """
-    st.components.v1.html(js_code, height=0)
 
 def extract_title_from_response(response_text):
     """
@@ -915,7 +926,7 @@ if check_password():
             logo_path = "logo.jpeg"
             st.image(logo_path, width=50)
         with col2:
-            st.markdown('<h2 style="margin-top: 0;">Chat IA</h2>', unsafe_allow_html=True)
+            st.markdown('<h2 style="margin-top: 0;">Donna AI</h2>', unsafe_allow_html=True)
         
         st.divider()
         
